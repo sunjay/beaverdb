@@ -1,10 +1,4 @@
-mod language;
-mod storage;
-
-use anyhow::Context;
 use rustyline::{Editor, error::ReadlineError};
-
-use crate::language::Stmt;
 
 fn main() -> Result<(), anyhow::Error> {
     // `()` can be used when no completer is required
@@ -12,9 +6,9 @@ fn main() -> Result<(), anyhow::Error> {
 
     loop {
         match reader.readline("> ") {
-            Ok(line) => {
-                reader.add_history_entry(&line);
-                println!("Line: {}", line);
+            Ok(input) => {
+                reader.add_history_entry(&input);
+                execute_input(&input)?;
             },
 
             Err(ReadlineError::Interrupted) |
@@ -30,8 +24,6 @@ fn main() -> Result<(), anyhow::Error> {
 }
 
 fn execute_input(input: &str) -> Result<(), anyhow::Error> {
-    let query: Stmt = input.parse()
-        .context("Unable to parse input")?;
-
+    println!("Got input: {}", input);
     Ok(())
 }

@@ -1,1 +1,0 @@
-let db = $engine.load_database("example-bank");
